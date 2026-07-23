@@ -1,8 +1,13 @@
 // RAVIO Landing — приём партнёрских заявок (бригады/компании)
-// Vercel Serverless Function. Env vars (те же, что у калькулятора):
-//   TELEGRAM_BOT_TOKEN — токен бота от @BotFather
-//   TELEGRAM_CHAT_ID   — id чата/канала для заявок
-//   ALLOWED_ORIGIN     — список разрешённых origin через запятую (опционально)
+// Vercel Serverless Function. Env vars (те же значения, что в проекте калькулятора):
+//   TELEGRAM_BOT_TOKEN   — токен бота от @BotFather
+//   TELEGRAM_CHAT_ID     — id чата/канала для заявок
+//   EMAILJS_SERVICE_ID   — EmailJS: сервис
+//   EMAILJS_TEMPLATE_ID  — EmailJS: шаблон
+//   EMAILJS_PUBLIC_KEY   — EmailJS: public key
+//   EMAILJS_PRIVATE_KEY  — EmailJS: private key (для серверных вызовов)
+//   EMAILJS_TO_EMAIL     — куда слать письмо
+//   ALLOWED_ORIGIN       — список разрешённых origin через запятую (опционально)
 
 const ipHits = new Map(); // ip -> [timestamps]
 const RATE_WINDOW_MS = 60_000;
@@ -21,9 +26,60 @@ function rateLimited(ip) {
   return hits.length > RATE_MAX;
 }
 
+// ── Доставка: Telegram ──────────────────────────────────────────────────
+async function toTelegram(s) {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chat = process.env.TELEGRAM_CHAT_ID;
+  if (!token || !chat) return false;
+  const text =
+    `🤝 <b>Партнёрская заявка · лендинг RAVIO</b>\n\n` +
+    `👤 <b>${s.name}</b> · ${s.who || "—"}\n` +
+    `📞 ${s.phone} · ${s.channel}\n` +
+    `🛠 Этапы: ${s.stages.length ? s.stages.join(", ") : "—"}\n\n` +
+    `🌐 ${s.page}\n` +
+    `🕐 ${new Date().toLocaleString("ru-RU")}`;
+  const r = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ chat_id: chat, text, parse_mode: "HTML" }),
+  });
+  return r.ok;
+}
+
+// ── Доставка: Email (EmailJS, серверный вызов с private key) ─────────────
+async function toEmail(s) {
+  const service = process.env.EMAILJS_SERVICE_ID;
+  const template = process.env.EMAILJS_TEMPLATE_ID;
+  const pub = process.env.EMAILJS_PUBLIC_KEY;
+  const priv = process.env.EMAILJS_PRIVATE_KEY;
+  const to = process.env.EMAILJS_TO_EMAIL;
+  if (!service || !template || !pub) return false;
+  const message = [
+    "🤝 ПАРТНЁРСКАЯ ЗАЯВКА (лендинг RAVIO)",
+    "",
+    `👤 ${s.name}  |  ${s.who || "—"}`,
+    `📞 ${s.phone}  |  ${s.channel}`,
+    `🛠 Этапы: ${s.stages.length ? s.stages.join(", ") : "—"}`,
+    "",
+    `🌐 ${s.page}`,
+  ].join("\n");
+  const body = {
+    service_id: service, template_id: template, user_id: pub,
+    template_params: { to_email: to || "", name: s.name, time: new Date().toLocaleString("ru-RU"), message },
+  };
+  if (priv) body.accessToken = priv; // нужно для вызовов вне браузера
+  const r = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  return r.ok;
+}
+
 export default async function handler(req, res) {
+  res.setHeader("Cache-Control", "no-store");
   const allowedList = (process.env.ALLOWED_ORIGIN || "")
-    .split(",").map((s) => s.trim()).filter(Boolean);
+    .split(",").map((x) => x.trim()).filter(Boolean);
   const origin = req.headers.origin || "";
   if (allowedList.length && allowedList.includes(origin)) {
     res.setHeader("Access-Control-Allow-Origin", origin);
@@ -37,39 +93,28 @@ export default async function handler(req, res) {
   if (rateLimited(ip)) return res.status(429).json({ error: "rate" });
 
   const b = req.body || {};
-  const name = str(b.name, 80).trim();
-  const phone = str(b.phone, 30).trim();
-  const digits = phone.replace(/\D/g, "");
-  const channel = ["WhatsApp", "Telegram"].includes(b.channel) ? b.channel : "WhatsApp";
-  const who = str(b.who, 40).trim();
-  const stages = Array.isArray(b.stages)
-    ? b.stages.map((s) => str(s, 20)).filter(Boolean).slice(0, 12)
-    : [];
+  const s = {
+    name: str(b.name, 80).trim(),
+    phone: str(b.phone, 30).trim(),
+    channel: ["WhatsApp", "Telegram"].includes(b.channel) ? b.channel : "WhatsApp",
+    who: str(b.who, 40).trim(),
+    stages: Array.isArray(b.stages)
+      ? b.stages.map((x) => str(x, 20)).filter(Boolean).slice(0, 12)
+      : [],
+    page: str(b.page, 200),
+  };
 
-  if (!name || digits.length < 10 || digits.length > 12) {
+  const digits = s.phone.replace(/\D/g, "");
+  if (!s.name || digits.length < 10 || digits.length > 12) {
     return res.status(400).json({ error: "validation" });
   }
 
-  const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chat = process.env.TELEGRAM_CHAT_ID;
-  if (!token || !chat) return res.status(500).json({ error: "config" });
+  const hasTg = !!(process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID);
+  const hasEmail = !!(process.env.EMAILJS_SERVICE_ID && process.env.EMAILJS_TEMPLATE_ID && process.env.EMAILJS_PUBLIC_KEY);
+  if (!hasTg && !hasEmail) return res.status(500).json({ error: "config" });
 
-  const text =
-    `🤝 Новая партнёрская заявка (лендинг)\n\n` +
-    `👤 ${name} · ${who || "—"}\n` +
-    `📞 ${phone} · ${channel}\n` +
-    `🛠 Этапы: ${stages.length ? stages.join(", ") : "—"}\n` +
-    `🌐 ${str(b.page, 200)}`;
-
-  try {
-    const r = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ chat_id: chat, text }),
-    });
-    if (!r.ok) throw new Error("tg " + r.status);
-    return res.status(200).json({ ok: true });
-  } catch (e) {
-    return res.status(502).json({ error: "send" });
-  }
+  const results = await Promise.allSettled([toTelegram(s), toEmail(s)]);
+  const delivered = results.some((r) => r.status === "fulfilled" && r.value === true);
+  if (!delivered) return res.status(502).json({ error: "send" });
+  return res.status(200).json({ ok: true });
 }
