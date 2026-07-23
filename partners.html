@@ -277,10 +277,16 @@ footer{background:var(--ink);color:#B9BAC2;padding:56px 0 24px;font-size:14px}
 .field input[type=text],.field input[type=tel]{width:100%;border:1px solid #D8D8DC;border-radius:10px;padding:12px 14px;font:inherit;font-size:15px}
 .field input:focus{outline:2px solid var(--yellow);border-color:transparent}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
-.chips label{display:inline-flex;align-items:center;gap:6px;border:1px solid #D8D8DC;border-radius:20px;padding:8px 14px;font-size:13.5px;font-weight:600;cursor:pointer;margin:0}
-.chips input{accent-color:var(--ink)}
+.chips label{position:relative;display:inline-flex;align-items:center;gap:6px;border:1px solid #D8D8DC;border-radius:20px;padding:9px 16px;font-size:13.5px;font-weight:600;cursor:pointer;margin:0;user-select:none;transition:background .15s ease,color .15s ease,border-color .15s ease}
+.chips input{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
+.chips label::before{content:'';width:0;overflow:hidden;font-weight:800;transition:width .15s ease}
+.chips label:has(input:checked)::before{content:'\2713';width:14px}
+.chips label:hover{border-color:var(--ink)}
+.chips label:has(input:focus-visible){outline:2px solid var(--yellow);outline-offset:2px}
+
 .chips label:has(input:checked){background:var(--dark);color:#fff;border-color:var(--dark)}
-.policy-check{display:flex;gap:10px;font-size:13px;color:var(--muted);margin:18px 0}
+.policy-check{display:flex;gap:10px;font-size:13px;color:var(--muted);margin:18px 0;align-items:flex-start}
+.policy-check input{width:18px;height:18px;accent-color:var(--dark);margin-top:1px;flex:0 0 auto}
 .policy-check a{text-decoration:underline}
 .modal .btn{width:100%}
 .form-ok{display:none;text-align:center;padding:30px 0}
