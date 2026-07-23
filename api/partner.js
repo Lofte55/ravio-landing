@@ -111,7 +111,12 @@ export default async function handler(req, res) {
 
   const hasTg = !!(process.env.TELEGRAM_BOT_TOKEN && process.env.TELEGRAM_CHAT_ID);
   const hasEmail = !!(process.env.EMAILJS_SERVICE_ID && process.env.EMAILJS_TEMPLATE_ID && process.env.EMAILJS_PUBLIC_KEY);
-  if (!hasTg && !hasEmail) return res.status(500).json({ error: "config" });
+  if (!hasTg && !hasEmail) {
+    // Диагностика: какие переменные не заданы (только имена, без значений)
+    const missing = ["TELEGRAM_BOT_TOKEN", "TELEGRAM_CHAT_ID", "EMAILJS_SERVICE_ID", "EMAILJS_TEMPLATE_ID", "EMAILJS_PUBLIC_KEY"]
+      .filter((k) => !process.env[k]);
+    return res.status(500).json({ error: "config", missing });
+  }
 
   const results = await Promise.allSettled([toTelegram(s), toEmail(s)]);
   const delivered = results.some((r) => r.status === "fulfilled" && r.value === true);
