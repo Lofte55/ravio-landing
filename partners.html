@@ -833,7 +833,7 @@ footer{background:var(--ink);color:#B9BAC2;padding:56px 0 24px;font-size:14px}
       </div>
       <div class="field">
         <label for="pPhone">Телефон</label>
-        <input type="tel" id="pPhone" name="phone" required placeholder="+7" maxlength="18" autocomplete="tel">
+        <input type="tel" id="pPhone" name="phone" required placeholder="+7 700 123 45 67" maxlength="16" inputmode="numeric" autocomplete="tel" value="+7 ">
       </div>
       <div class="field">
         <label>Куда присылать заявки</label>
@@ -891,6 +891,25 @@ footer{background:var(--ink);color:#B9BAC2;padding:56px 0 24px;font-size:14px}
   var burger=document.querySelector('[data-burger]'),menu=document.getElementById('mobileMenu');
   burger.addEventListener('click',function(){menu.classList.toggle('open');});
   menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){menu.classList.remove('open');});});
+
+  /* phone mask: +7 fixed, digits only, 10 digits after +7 */
+  var ph=document.getElementById('pPhone');
+  function phDigits(){return ph.value.replace(/\D/g,'').replace(/^[78]/,'').slice(0,10);}
+  function phFormat(){
+    var d=phDigits(), out='+7';
+    if(d.length){out+=' '+d.slice(0,3);}
+    if(d.length>3){out+=' '+d.slice(3,6);}
+    if(d.length>6){out+=' '+d.slice(6,8);}
+    if(d.length>8){out+=' '+d.slice(8,10);}
+    ph.value=out+(d.length===0?' ':'');
+    ph.setCustomValidity(d.length===10?'':'Введите 10 цифр после +7');
+  }
+  ph.addEventListener('input',phFormat);
+  ph.addEventListener('focus',function(){if(!phDigits().length){ph.value='+7 ';}setTimeout(function(){ph.setSelectionRange(ph.value.length,ph.value.length);},0);});
+  ph.addEventListener('keydown',function(e){
+    if(e.key==='Backspace'&&ph.selectionStart<=3&&ph.selectionStart===ph.selectionEnd){e.preventDefault();}
+  });
+  ph.addEventListener('blur',function(){if(!phDigits().length){ph.value='+7 ';}});
 
   document.getElementById('partnerForm').addEventListener('submit',function(e){
     e.preventDefault();

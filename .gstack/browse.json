@@ -1,8 +1,8 @@
 {
-  "pid": 36572,
-  "port": 36894,
-  "token": "33edabd1-50e6-47e4-9941-c71c3c10fbd0",
-  "startedAt": "2026-07-23T05:25:07.497Z",
+  "pid": 38559,
+  "port": 28075,
+  "token": "33ad3188-d133-4966-94f9-2df0e28b2108",
+  "startedAt": "2026-07-23T06:31:19.701Z",
   "serverPath": "/Users/clays/Documents/cloude_v1/.claude/skills/gstack/browse/src/server.ts",
   "mode": "launched",
   "configHash": "303a7eeccc03078b"
