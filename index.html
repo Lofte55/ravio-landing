@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Калькулятор стоимости ремонта в Павлодаре — RAVIO</title>
-<meta name="description" content="Рассчитайте стоимость ремонта квартиры в Павлодаре за 3 минуты: санузел, кухня, электрика, черновые работы. Цены из реальных смет местных бригад. Бесплатно, без звонков и без обязательств.">
+<meta name="description" content="Рассчитайте стоимость ремонта квартиры в Павлодаре за 3 минуты: санузел, электрика, черновые и чистовые работы. Цены из реальных смет местных бригад. Бесплатно, без звонков и без обязательств.">
 <link rel="canonical" href="https://ravio.kz/">
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 <meta property="og:type" content="website">
@@ -44,7 +44,11 @@ img,svg{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 ul{list-style:none}
 button{font:inherit;cursor:pointer;border:none;background:none}
-.wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+/* scroll reveal */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1);transition-delay:var(--d,0s)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){.rv{opacity:1;transform:none;transition:none}}
 .eyebrow{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
 h2{font-size:clamp(28px,4vw,44px);font-weight:800;line-height:1.15;letter-spacing:-.01em}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:16px;border-radius:12px;padding:14px 26px;transition:transform .15s ease,box-shadow .15s ease}
@@ -77,7 +81,7 @@ h2{font-size:clamp(28px,4vw,44px);font-weight:800;line-height:1.15;letter-spacin
 .hero h1{font-size:clamp(38px,5.4vw,64px);font-weight:800;line-height:1.05;letter-spacing:-.02em}
 .hero h1 .marker{font-size:.88em;margin-top:.12em}
 @media (min-width: 961px){.hero h1 .marker{white-space:nowrap}}
-.hero-sub{margin:26px 0 30px;font-size:18px;color:#5A5C66;max-width:440px}
+.hero-sub{margin:26px 0 30px;font-size:18.5px;color:#5A5C66;max-width:520px}
 .social{display:flex;align-items:center;gap:14px;margin-top:28px}
 .avatars{display:flex}
 .avatars span{width:32px;height:32px;border-radius:50%;border:2px solid #fff;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#3C3E48;margin-left:-8px}
@@ -104,7 +108,7 @@ h2{font-size:clamp(28px,4vw,44px);font-weight:800;line-height:1.15;letter-spacin
 .stage .ico{font-size:14px;opacity:.75}
 .stage .nm{font-size:13.5px;font-weight:700}
 .stage .bar{grid-column:2/3;height:4px;border-radius:2px;background:#EDEDEF;position:relative;margin-top:3px}
-.stage .bar i{position:absolute;inset:0;right:auto;border-radius:2px;background:var(--dark)}
+.stage .bar i{position:absolute;inset:0;right:auto;border-radius:2px;background:var(--dark);transition:width 1.1s cubic-bezier(.22,.61,.36,1)}
 .stage:nth-child(odd) .bar i{background:var(--yellow)}
 .stage .days{font-size:11.5px;color:var(--muted2)}
 .stage .sum{font-size:13px;font-weight:700}
@@ -343,7 +347,7 @@ footer{background:var(--ink);color:#B9BAC2;padding:56px 0 24px;font-size:14px}
         {
           "@type": "Question",
           "name": "Можно посчитать только санузел?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Да. В калькуляторе можно выбрать «Отдельные этапы» и посчитать ровно то, что вам нужно сейчас — санузел, электрику, кухню или одну комнату. Не обязательно сразу считать весь ремонт." }
+          "acceptedAnswer": { "@type": "Answer", "text": "Да. В калькуляторе можно выбрать «Отдельные этапы» и посчитать ровно то, что вам нужно сейчас — санузел, электрику или одну комнату. Не обязательно сразу считать весь ремонт." }
         },
         {
           "@type": "Question",
@@ -386,7 +390,7 @@ footer{background:var(--ink);color:#B9BAC2;padding:56px 0 24px;font-size:14px}
       <a href="#faq">Вопросы</a>
     </nav>
     <div class="header-cta">
-      <button class="btn btn-outline" data-open-partner>Партнерам</button>
+      <a class="btn btn-outline" href="/partners">Партнерам</a>
       <a class="btn btn-dark" href="https://calculator-ravio.kz/">Рассчитать ремонт</a>
     </div>
     <button class="burger" aria-label="Меню" data-burger><span></span><span></span><span></span></button>
@@ -397,7 +401,7 @@ footer{background:var(--ink);color:#B9BAC2;padding:56px 0 24px;font-size:14px}
   <a href="#how">Как это работает</a>
   <a href="#scope">Что входит</a>
   <a href="#faq">Вопросы</a>
-  <button class="btn btn-outline" data-open-partner>Партнерам</button>
+  <a class="btn btn-outline" href="/partners">Партнерам</a>
   <a class="btn btn-dark" href="https://calculator-ravio.kz/">Рассчитать ремонт</a>
 </div>
 
@@ -421,24 +425,24 @@ footer{background:var(--ink);color:#B9BAC2;padding:56px 0 24px;font-size:14px}
       <div class="widget" aria-hidden="true">
         <div class="widget-top">
           <span class="lbl">Ваш диапазон бюджета</span>
-          <span>78 м² · Под ключ</span>
+          <span id="wArea">78 м² · Под ключ</span>
         </div>
         <div class="widget-range">
-          <div class="row"><span class="pre">от</span><span class="num">9 100 000</span><span class="cur">₸</span></div>
-          <div class="row"><span class="pre">до</span><span class="num">13 400 000</span><span class="cur">₸</span></div>
+          <div class="row"><span class="pre">от</span><span class="num" id="wFrom">9 100 000</span><span class="cur">₸</span></div>
+          <div class="row"><span class="pre">до</span><span class="num" id="wTo">13 400 000</span><span class="cur">₸</span></div>
         </div>
         <div class="widget-meta">
-          <span>144 231 ₸ за м²</span>
+          <span><span id="wM2">144 231</span> ₸ за м²</span>
           <span class="shield">🛡 Независимая оценка</span>
         </div>
-        <div class="stages">
+        <div class="stages" id="wStages">
           <div class="stages-top"><span>Этапы ремонта</span><span>11 этапов</span></div>
           <div class="stage"><span class="ico">⚒</span><div class="stage-inner"><span class="nm">Демонтаж</span><span class="bar"><i style="width:38%"></i></span></div><span class="days">2 дня</span><span class="sum">387 тыс</span></div>
           <div class="stage"><span class="ico">⚡</span><div class="stage-inner"><span class="nm">Электрика</span><span class="bar"><i style="width:55%"></i></span></div><span class="days">3 дня</span><span class="sum">819 тыс</span></div>
           <div class="stage"><span class="ico">💧</span><div class="stage-inner"><span class="nm">Сантехника</span><span class="bar"><i style="width:44%"></i></span></div><span class="days">4 дня</span><span class="sum">614 тыс</span></div>
           <div class="stage"><span class="ico">🧱</span><div class="stage-inner"><span class="nm">Стены и потолки</span><span class="bar"><i style="width:63%"></i></span></div><span class="days">4 дня</span><span class="sum">924 тыс</span></div>
           <div class="stage"><span class="ico">🪵</span><div class="stage-inner"><span class="nm">Полы</span><span class="bar"><i style="width:47%"></i></span></div><span class="days">4 дня</span><span class="sum">821 тыс</span></div>
-          <div class="stage"><span class="ico">🍳</span><div class="stage-inner"><span class="nm">Кухня</span><span class="bar"><i style="width:50%"></i></span></div><span class="days">4 дня</span><span class="sum">655 тыс</span></div>
+          <div class="stage"><span class="ico">🎨</span><div class="stage-inner"><span class="nm">Чистовая отделка</span><span class="bar"><i style="width:50%"></i></span></div><span class="days">5 дней</span><span class="sum">655 тыс</span></div>
         </div>
         <a class="btn btn-yellow" href="https://calculator-ravio.kz/">Рассчитать ремонт</a>
         <p class="widget-note">Бесплатно · без регистрации · 3 минуты</p>
@@ -466,9 +470,6 @@ footer{background:var(--ink);color:#B9BAC2;padding:56px 0 24px;font-size:14px}
       </a>
       <a class="scope-card" href="https://calculator-ravio.kz/">
         <span class="ic">🛁</span><h3>Санузел</h3><p>Только ванная и/или туалет</p><span class="go">Рассчитать</span>
-      </a>
-      <a class="scope-card" href="https://calculator-ravio.kz/">
-        <span class="ic">🍳</span><h3>Кухня</h3><p>Гарнитур, отделка, коммуникации</p><span class="go">Рассчитать</span>
       </a>
       <a class="scope-card" href="https://calculator-ravio.kz/">
         <span class="ic">🛋</span><h3>Комната</h3><p>Одна комната под себя</p><span class="go">Рассчитать</span>
@@ -526,7 +527,7 @@ footer{background:var(--ink);color:#B9BAC2;padding:56px 0 24px;font-size:14px}
             <p class="sum">599—861 <small>тыс ₸</small></p>
           </div>
           <div class="split-item">
-            <div class="top"><span class="ic">🍳</span><h4>Кухня</h4><span class="pct">12%</span></div>
+            <div class="top"><span class="ic">🪵</span><h4>Полы</h4><span class="pct">12%</span></div>
             <p class="sum">514—738 <small>тыс ₸</small></p>
           </div>
           <div class="split-item">
@@ -617,8 +618,8 @@ footer{background:var(--ink);color:#B9BAC2;padding:56px 0 24px;font-size:14px}
         <p class="lead">К нам приходят люди, которые уже посчитали смету. Они знают, сколько стоит работа, и не торгуются за каждые пять процентов. Получайте таких клиентов в свой канал.</p>
         <div class="pfeat"><span class="ic">✳</span><div><h3>Тёплые заявки</h3><p>Не «холодный лид» из объявления — а клиент, который уже разобрался в этапах ремонта.</p></div></div>
         <div class="pfeat"><span class="ic">✓</span><div><h3>Клиент уже знает бюджет</h3><p>Не нужно объяснять, почему «не выйдет за 800 тысяч». Все в одной системе координат.</p></div></div>
-        <div class="pfeat"><span class="ic">📋</span><div><h3>Заявки на этапы</h3><p>Делаете только сантехнику или только кухню? Получайте именно такие запросы.</p></div></div>
-        <button class="btn btn-yellow" data-open-partner>Стать партнером</button>
+        <div class="pfeat"><span class="ic">📋</span><div><h3>Заявки на этапы</h3><p>Делаете только сантехнику или только электрику? Получайте именно такие запросы.</p></div></div>
+        <a class="btn btn-yellow" href="/partners">Стать партнером</a>
       </div>
       <div class="chat-card" aria-hidden="true">
         <div class="chat-head">
@@ -634,7 +635,7 @@ footer{background:var(--ink);color:#B9BAC2;padding:56px 0 24px;font-size:14px}
           <div class="budget-pill"><span class="l">Бюджет клиента</span><span class="v">4 280—6 150</span><small>млн ₸</small></div>
           <p class="hint">Телефон клиента откроется по кнопке ниже 👇</p>
         </div>
-        <button class="btn btn-yellow" data-open-partner>Написать клиенту</button>
+        <a class="btn btn-yellow" href="/partners">Написать клиенту</a>
         <p class="chat-note">Заявка приходит прямо в ваш WhatsApp или Telegram</p>
       </div>
     </div>
@@ -653,7 +654,7 @@ footer{background:var(--ink);color:#B9BAC2;padding:56px 0 24px;font-size:14px}
       </details>
       <details>
         <summary>Можно посчитать только санузел?</summary>
-        <p class="a">Да. В калькуляторе можно выбрать «Отдельные этапы» и посчитать ровно то, что вам нужно сейчас — санузел, электрику, кухню или одну комнату. Не обязательно сразу считать весь ремонт.</p>
+        <p class="a">Да. В калькуляторе можно выбрать «Отдельные этапы» и посчитать ровно то, что вам нужно сейчас — санузел, электрику или одну комнату. Не обязательно сразу считать весь ремонт.</p>
       </details>
       <details>
         <summary>Будет ли звонить подрядчик?</summary>
@@ -705,14 +706,14 @@ footer{background:var(--ink);color:#B9BAC2;padding:56px 0 24px;font-size:14px}
       </div>
       <div class="foot-col">
         <h4>Партнёрам</h4>
-        <a href="#partners" data-open-partner>Стать партнером</a>
-        <a href="#partners">Условия для партнерства</a>
+        <a href="/partners">Стать партнером</a>
+        <a href="/partners#terms">Условия для партнерства</a>
       </div>
       <div class="foot-col">
         <h4>Помощь</h4>
         <a href="#faq">FAQ</a>
         <a href="#faq">Связаться с нами</a>
-        <a href="/policy.html">Политика конфиденциальности</a>
+        <a href="/policy">Политика конфиденциальности</a>
       </div>
     </div>
     <p class="disclaimer"><b>Дисклеймер:</b> Расчёт RAVIO является предварительным и не является официальной сметой. Окончательная стоимость определяется индивидуально с подрядчиком и зависит от выбранных материалов, сложности объекта и сроков выполнения работ. RAVIO не выполняет строительные работы и не несёт ответственности за качество услуг подрядчиков.</p>
@@ -723,91 +724,69 @@ footer{background:var(--ink);color:#B9BAC2;padding:56px 0 24px;font-size:14px}
   </div>
 </footer>
 
-<!-- PARTNER MODAL -->
-<div class="modal" id="partnerModal" role="dialog" aria-modal="true" aria-labelledby="pmTitle">
-  <div class="modal-card">
-    <button class="modal-close" data-close-partner aria-label="Закрыть">✕</button>
-    <form id="partnerForm">
-      <h3 id="pmTitle">Стать партнёром RAVIO</h3>
-      <p class="sub">Присоединяйтесь к нашей команде и получайте заказы на ремонт квартир</p>
-      <div class="field">
-        <label for="pName">Имя или название бригады</label>
-        <input type="text" id="pName" name="name" required maxlength="80" autocomplete="name">
-      </div>
-      <div class="field">
-        <label for="pPhone">Телефон</label>
-        <input type="tel" id="pPhone" name="phone" required placeholder="+7" maxlength="18" autocomplete="tel">
-      </div>
-      <div class="field">
-        <label>Куда присылать заявки</label>
-        <div class="chips">
-          <label><input type="radio" name="channel" value="WhatsApp" checked> WhatsApp</label>
-          <label><input type="radio" name="channel" value="Telegram"> Telegram</label>
-        </div>
-      </div>
-      <div class="field">
-        <label>Кто вы</label>
-        <div class="chips">
-          <label><input type="radio" name="who" value="Частная бригада" checked> Частная бригада</label>
-          <label><input type="radio" name="who" value="Стройкомпания"> Стройкомпания</label>
-          <label><input type="radio" name="who" value="Узкий специалист"> Узкий специалист</label>
-        </div>
-      </div>
-      <div class="field">
-        <label>Какие этапы делаете</label>
-        <div class="chips">
-          <label><input type="checkbox" name="stages" value="Демонтаж"> Демонтаж</label>
-          <label><input type="checkbox" name="stages" value="Электрика"> Электрика</label>
-          <label><input type="checkbox" name="stages" value="Сантехника"> Сантехника</label>
-          <label><input type="checkbox" name="stages" value="Санузел"> Санузел</label>
-          <label><input type="checkbox" name="stages" value="Кухня"> Кухня</label>
-          <label><input type="checkbox" name="stages" value="Потолки"> Потолки</label>
-          <label><input type="checkbox" name="stages" value="Полы"> Полы</label>
-          <label><input type="checkbox" name="stages" value="Стены"> Стены</label>
-          <label><input type="checkbox" name="stages" value="Вывоз мусора"> Вывоз мусора</label>
-        </div>
-      </div>
-      <label class="policy-check">
-        <input type="checkbox" required>
-        <span>Принимаю <a href="/policy.html" target="_blank">Политику конфиденциальности</a> и обработку персональных данных</span>
-      </label>
-      <button type="submit" class="btn btn-yellow">Стать партнером</button>
-    </form>
-    <div class="form-ok" id="formOk">
-      <div class="big">✅</div>
-      <h3>Заявка отправлена</h3>
-      <p class="sub">Мы свяжемся с вами в течение дня.</p>
-    </div>
-  </div>
-</div>
-
 <script>
 (function(){
-  var modal=document.getElementById('partnerModal');
-  document.querySelectorAll('[data-open-partner]').forEach(function(b){
-    b.addEventListener('click',function(e){e.preventDefault();modal.classList.add('open');document.body.style.overflow='hidden';});
-  });
-  function close(){modal.classList.remove('open');document.body.style.overflow='';}
-  modal.querySelector('[data-close-partner]').addEventListener('click',close);
-  modal.addEventListener('click',function(e){if(e.target===modal)close();});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
-
   var burger=document.querySelector('[data-burger]'),menu=document.getElementById('mobileMenu');
   burger.addEventListener('click',function(){menu.classList.toggle('open');});
   menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){menu.classList.remove('open');});});
 
-  document.getElementById('partnerForm').addEventListener('submit',function(e){
-    e.preventDefault();
-    var f=e.target,fd=new FormData(f);
-    var payload={
-      name:fd.get('name'),phone:fd.get('phone'),channel:fd.get('channel'),who:fd.get('who'),
-      stages:fd.getAll('stages'),page:location.href
-    };
-    var btn=f.querySelector('[type=submit]');btn.disabled=true;btn.textContent='Отправляем…';
-    fetch('/api/partner',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
-      .then(function(r){if(!r.ok)throw 0;f.style.display='none';document.getElementById('formOk').style.display='block';})
-      .catch(function(){btn.disabled=false;btn.textContent='Стать партнером';alert('Не удалось отправить. Попробуйте ещё раз.');});
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* scroll reveal */
+  var rvSel=['.scope-card','.step','.why-card','.pfeat','.strip-item','.split-item','.result-card','.split-card','.compare','.chat-card','.faq-list details','.final-in','h2','.eyebrow'];
+  var els=document.querySelectorAll(rvSel.join(','));
+  els.forEach(function(el){el.classList.add('rv');});
+  var groups={};
+  els.forEach(function(el){
+    var p=el.parentElement;var k=p?p.className:'x';
+    groups[k]=(groups[k]||0);el.style.setProperty('--d',(groups[k]%6)*0.08+'s');groups[k]++;
   });
+  if('IntersectionObserver' in window && !reduce){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});
+    },{rootMargin:'0px 0px -8% 0px',threshold:0.08});
+    els.forEach(function(el){io.observe(el);});
+  } else {
+    els.forEach(function(el){el.classList.add('in');});
+  }
+
+  /* hero widget live demo */
+  var presets=[
+    {area:'78 м² · Под ключ', from:9100000, to:13400000, m2:144231, bars:[38,55,44,63,47,50], sums:[387,819,614,924,821,655]},
+    {area:'56 м² · Капитальный', from:6300000, to:9200000, m2:138392, bars:[30,46,38,52,40,42], sums:[278,588,441,663,589,470]},
+    {area:'42 м² · Косметический', from:3100000, to:4700000, m2:92857, bars:[18,30,24,40,28,32], sums:[139,294,220,398,295,235]},
+    {area:'64 м² · Под ключ', from:7500000, to:11000000, m2:144531, bars:[34,50,40,58,43,46], sums:[318,672,504,758,674,537]}
+  ];
+  var wArea=document.getElementById('wArea'),wFrom=document.getElementById('wFrom'),
+      wTo=document.getElementById('wTo'),wM2=document.getElementById('wM2'),
+      stages=document.querySelectorAll('#wStages .stage');
+  if(wArea && !reduce){
+    var cur=presets[0], idx=0;
+    function fmt(n){return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'\u00A0');}
+    function tween(el,a,b,ms){
+      var t0=null;
+      function step(ts){
+        if(!t0)t0=ts;var p=Math.min((ts-t0)/ms,1);p=1-Math.pow(1-p,3);
+        el.textContent=fmt(a+(b-a)*p);
+        if(p<1)requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+    setInterval(function(){
+      idx=(idx+1)%presets.length;
+      var nx=presets[idx];
+      wArea.textContent=nx.area;
+      tween(wFrom,cur.from,nx.from,900);
+      tween(wTo,cur.to,nx.to,900);
+      tween(wM2,cur.m2,nx.m2,900);
+      stages.forEach(function(st,i){
+        var bar=st.querySelector('.bar i'),sum=st.querySelector('.sum');
+        if(bar)bar.style.width=nx.bars[i]+'%';
+        if(sum)sum.textContent=nx.sums[i]+'\u00A0тыс';
+      });
+      cur=nx;
+    },4200);
+  }
 })();
 </script>
 </body>

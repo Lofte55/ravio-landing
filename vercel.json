@@ -1,11 +1,11 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
   "functions": {
     "api/partner.js": { "maxDuration": 15 }
   },
   "redirects": [
-    { "source": "/policy", "destination": "/policy.html", "permanent": true },
-    { "source": "/polyce", "destination": "/policy.html", "permanent": true }
+    { "source": "/polyce", "destination": "/policy", "permanent": true }
   ],
   "headers": [
     {
