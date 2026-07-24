@@ -292,6 +292,21 @@ footer{background:var(--ink);color:#B9BAC2;padding:56px 0 24px;font-size:14px}
 .form-ok{display:none;text-align:center;padding:30px 0}
 .form-ok .big{font-size:44px;margin-bottom:12px}
 
+/* contact modal (dark, единый с калькулятором) */
+.cmodal{position:fixed;inset:0;z-index:120;display:none;align-items:center;justify-content:center;overflow-y:auto;background:rgba(0,0,0,.55);padding:16px}
+.cmodal.open{display:flex}
+.cmodal-card{background:#1E2028;border-radius:16px;max-width:400px;width:100%;padding:28px 26px 24px;position:relative;margin:auto;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.cmodal-close{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:8px;background:#272930;border:none;color:#9D9FA8;font-size:18px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.cmodal .eye{color:#F5C842;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.cmodal h3{color:#fff;font-size:20px;font-weight:800;margin-bottom:6px}
+.cmodal .sub{color:#9D9FA8;font-size:14px;line-height:1.55;margin-bottom:20px}
+.crow{display:flex;align-items:center;gap:13px;text-decoration:none;background:#272930;border:1px solid rgba(157,159,168,.18);border-radius:14px;padding:12px 14px;margin-bottom:10px;transition:border-color .18s ease,transform .18s ease}
+.crow:hover{border-color:rgba(245,200,66,.45);transform:translateY(-1px)}
+.crow .badge{flex:0 0 auto;width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+.crow .lbl{color:#9D9FA8;font-size:12px;font-weight:600}
+.crow .val{color:#fff;font-size:15px;font-weight:700}
+.crow .chev{margin-left:auto;color:#6E707A;font-size:20px;line-height:1}
+
 /* mobile */
 .mobile-menu{display:none;position:fixed;inset:64px 0 auto 0;background:#fff;border-bottom:1px solid var(--line);z-index:49;padding:16px 20px 24px}
 @media (max-width: 960px){
@@ -837,7 +852,7 @@ footer{background:var(--ink);color:#B9BAC2;padding:56px 0 24px;font-size:14px}
       <div class="foot-col">
         <h4>Помощь</h4>
         <a href="#faq">FAQ</a>
-        <a href="#faq">Связаться с нами</a>
+        <a href="#" data-contact>Связаться с нами</a>
         <a href="/policy">Политика конфиденциальности</a>
       </div>
     </div>
@@ -849,6 +864,40 @@ footer{background:var(--ink);color:#B9BAC2;padding:56px 0 24px;font-size:14px}
   </div>
 </footer>
 
+<!-- Модалка «Связаться с нами» -->
+<div class="cmodal" id="contactModal" aria-hidden="true">
+  <div class="cmodal-card" role="dialog" aria-modal="true" aria-label="Связаться с нами">
+    <button class="cmodal-close" data-contact-close aria-label="Закрыть">×</button>
+    <div class="eye">Контакты</div>
+    <h3>Свяжитесь с нами</h3>
+    <p class="sub">Выберите удобный способ — ответим в течение рабочего дня.</p>
+
+    <a class="crow" href="https://wa.me/77083445023" target="_blank" rel="noopener noreferrer" data-contact-goal="whatsapp">
+      <span class="badge" style="background:#25D366">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.967-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.58-.487-.501-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </span>
+      <span><span class="lbl" style="display:block">WhatsApp</span><span class="val">+7 708 344 50 23</span></span>
+      <span class="chev">›</span>
+    </a>
+
+    <a class="crow" href="https://t.me/artumikh" target="_blank" rel="noopener noreferrer" data-contact-goal="telegram">
+      <span class="badge" style="background:#29A9EB">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="#fff" aria-hidden="true"><path d="M11.944 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0a12 12 0 00-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 01.171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+      </span>
+      <span><span class="lbl" style="display:block">Telegram</span><span class="val">@artumikh</span></span>
+      <span class="chev">›</span>
+    </a>
+
+    <a class="crow" href="tel:+77083445023" data-contact-goal="call">
+      <span class="badge" style="background:#F5C842">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1E2028" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      </span>
+      <span><span class="lbl" style="display:block">Позвонить</span><span class="val">+7 708 344 50 23</span></span>
+      <span class="chev">›</span>
+    </a>
+  </div>
+</div>
+
 <script>
 (function(){
   var burger=document.querySelector('[data-burger]'),menu=document.getElementById('mobileMenu');
@@ -857,6 +906,20 @@ footer{background:var(--ink);color:#B9BAC2;padding:56px 0 24px;font-size:14px}
 
   /* Yandex.Metrika goals */
   function goal(n){try{if(window.ym)ym(110354514,'reachGoal',n);}catch(e){}}
+
+  /* Модалка «Связаться с нами» */
+  var cm=document.getElementById('contactModal');
+  function openContact(){cm.classList.add('open');cm.setAttribute('aria-hidden','false');goal('footer_contact_open');}
+  function closeContact(){cm.classList.remove('open');cm.setAttribute('aria-hidden','true');}
+  document.querySelectorAll('[data-contact]').forEach(function(a){
+    a.addEventListener('click',function(e){e.preventDefault();openContact();});
+  });
+  document.querySelectorAll('[data-contact-close]').forEach(function(b){b.addEventListener('click',closeContact);});
+  cm.addEventListener('click',function(e){if(e.target===cm)closeContact();});
+  document.querySelectorAll('[data-contact-goal]').forEach(function(a){
+    a.addEventListener('click',function(){goal('footer_contact_'+a.getAttribute('data-contact-goal'));});
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&cm.classList.contains('open'))closeContact();});
   document.querySelectorAll('a[href*="calculator-ravio.kz"]').forEach(function(a){
     a.addEventListener('click',function(){goal('calc_click');});
   });
