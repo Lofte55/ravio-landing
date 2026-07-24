@@ -500,6 +500,19 @@ footer{background:var(--ink);color:#B9BAC2;padding:56px 0 24px;font-size:14px}
   ]
 }
 </script>
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=110354514', 'ym');
+
+    ym(110354514, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/110354514" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 </head>
 <body>
 <svg style="display:none" aria-hidden="true"><defs>
@@ -879,9 +892,10 @@ footer{background:var(--ink);color:#B9BAC2;padding:56px 0 24px;font-size:14px}
 
 <script>
 (function(){
+  function goal(n){try{if(window.ym)ym(110354514,'reachGoal',n);}catch(e){}}
   var modal=document.getElementById('partnerModal');
   document.querySelectorAll('[data-open-partner]').forEach(function(b){
-    b.addEventListener('click',function(e){e.preventDefault();modal.classList.add('open');document.body.style.overflow='hidden';});
+    b.addEventListener('click',function(e){e.preventDefault();modal.classList.add('open');document.body.style.overflow='hidden';goal('partner_form_open');});
   });
   function close(){modal.classList.remove('open');document.body.style.overflow='';}
   modal.querySelector('[data-close-partner]').addEventListener('click',close);
@@ -920,7 +934,7 @@ footer{background:var(--ink);color:#B9BAC2;padding:56px 0 24px;font-size:14px}
     };
     var btn=f.querySelector('[type=submit]');btn.disabled=true;btn.textContent='Отправляем…';
     fetch('/api/partner',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
-      .then(function(r){if(!r.ok)throw 0;f.style.display='none';document.getElementById('formOk').style.display='block';})
+      .then(function(r){if(!r.ok)throw 0;f.style.display='none';document.getElementById('formOk').style.display='block';goal('partner_lead');})
       .catch(function(){btn.disabled=false;btn.textContent='Стать партнером';alert('Не удалось отправить. Попробуйте ещё раз.');});
   });
 

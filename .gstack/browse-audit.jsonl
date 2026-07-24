@@ -81,3 +81,8 @@
 {"ts":"2026-07-23T11:55:37.355Z","cmd":"js","args":"document.getElementById('wArea').textContent","origin":"http://localhost:3177/","durationMs":1,"status":"ok","hasCookies":false,"mode":"launched"}
 {"ts":"2026-07-23T11:55:42.408Z","cmd":"js","args":"document.getElementById('wArea').textContent+' | '+document.getElementById('wFrom').textContent","origin":"http://localhost:3177/","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}
 {"ts":"2026-07-23T11:55:42.442Z","cmd":"console","args":"--errors","origin":"http://localhost:3177/","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-24T04:59:11.046Z","cmd":"goto","args":"http://localhost:3177/","origin":"http://localhost:3177/","durationMs":46,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-24T04:59:13.123Z","cmd":"js","args":"typeof window.ym + ' | queued=' + (window.ym && window.ym.a ? window.ym.a.length : 'n/a')","origin":"http://localhost:3177/","durationMs":1,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-24T04:59:13.159Z","cmd":"js","args":"!!document.querySelector('a[href*=calculator-ravio]')","origin":"http://localhost:3177/","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-24T04:59:13.193Z","cmd":"network","args":"","origin":"http://localhost:3177/","durationMs":1,"status":"ok","hasCookies":false,"mode":"launched"}
+{"ts":"2026-07-24T04:59:13.227Z","cmd":"console","args":"--errors","origin":"http://localhost:3177/","durationMs":0,"status":"ok","hasCookies":false,"mode":"launched"}
