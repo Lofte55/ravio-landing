@@ -72,6 +72,9 @@ h2{font-size:clamp(28px,4vw,44px);font-weight:800;line-height:1.15;letter-spacin
 .header-cta .btn{padding:10px 18px;font-size:14px}
 .burger{display:none;margin-left:auto;flex-direction:column;gap:5px;padding:8px}
 .burger span{width:22px;height:2px;background:var(--ink);border-radius:2px}
+.lang-toggle{display:inline-flex;gap:2px;background:#F2F0EA;border-radius:999px;padding:3px;flex:0 0 auto}
+.lang-toggle button{padding:5px 11px;border-radius:999px;border:none;cursor:pointer;font-size:12px;font-weight:700;background:transparent;color:var(--muted);transition:background .15s,color .15s}
+.lang-toggle button.active{background:var(--ink);color:var(--yellow)}
 
 /* hero */
 .hero{padding:64px 0 40px}
@@ -311,7 +314,8 @@ footer{background:var(--ink);color:#B9BAC2;padding:56px 0 24px;font-size:14px}
 .mobile-menu{display:none;position:fixed;inset:64px 0 auto 0;background:#fff;border-bottom:1px solid var(--line);z-index:49;padding:16px 20px 24px}
 @media (max-width: 960px){
   .nav,.header-cta{display:none}
-  .burger{display:flex}
+  .burger{display:flex;margin-left:12px}
+  .lang-toggle{margin-left:auto}
   .mobile-menu.open{display:block}
   .mobile-menu a:not(.btn){display:block;padding:12px 0;font-size:17px;font-weight:600;border-bottom:1px solid var(--line)}
   .mobile-menu .btn{width:100%;margin-top:12px}
@@ -547,6 +551,10 @@ footer{background:var(--ink);color:#B9BAC2;padding:56px 0 24px;font-size:14px}
     <div class="header-cta">
       <a class="btn btn-outline" href="/partners">Партнерам</a>
       <a class="btn btn-dark" href="/calculator/">Рассчитать ремонт</a>
+    </div>
+    <div class="lang-toggle" role="group" aria-label="Язык / Тіл">
+      <button type="button" data-lang-btn="ru">РУ</button>
+      <button type="button" data-lang-btn="kz">ҚАЗ</button>
     </div>
     <button class="burger" aria-label="Меню" data-burger><span></span><span></span><span></span></button>
   </div>
@@ -1001,5 +1009,6 @@ footer{background:var(--ink);color:#B9BAC2;padding:56px 0 24px;font-size:14px}
   }
 })();
 </script>
+<script src="/lang-landing.js" defer></script>
 </body>
 </html>
