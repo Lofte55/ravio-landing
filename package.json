@@ -1,0 +1,9 @@
+{
+  "name": "ravio-landing",
+  "version": "1.0.0",
+  "private": true,
+  "description": "RAVIO — лендинг ravio.kz + калькулятор ремонта (/calculator). Единый проект.",
+  "engines": {
+    "node": ">=18"
+  }
+}
