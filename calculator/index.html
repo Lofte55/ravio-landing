@@ -193,7 +193,7 @@
       accentHover: "#E8BA20",
       accentText:  "#5C4200",
       accentLight: "#FFFBE8",
-      bgPage:      "#FAF9F7",
+      bgPage:      "#FFFFFF",
       bgCard:      "#FFFFFF",
       bgDark:      "#1E2028",
       bgDarkSub:   "#252A34",
@@ -903,23 +903,40 @@
       </div>
     );
 
-    const TopBar = ({ step, total, onBack, showBack=true, rightEl, onLogoClick, progress }) => (
-      <div style={{ background:T.bgCard, position:"sticky", top:0, zIndex:50,
-        boxShadow:"0 1px 0 0 #E8E6E0" }}>
-        <div style={{ maxWidth:960, margin:"0 auto", padding:"0 24px",
-          display:"flex", alignItems:"center", justifyContent:"space-between", height:60 }}>
-          {showBack
-            ? <button onClick={onBack} className="rayo-btn-ghost" style={{ display:"flex", alignItems:"center", gap:6, padding:"7px 14px",
-                borderRadius:T.rPill, background:"transparent", border:`1.5px solid ${T.border}`,
-                fontSize:13, fontWeight:600, color:T.text, cursor:"pointer", whiteSpace:"nowrap" }}>{tr("← Назад")}</button>
-            : <div style={{ width:90 }}/>
-          }
-          <Logo onClick={onLogoClick}/>
-          <div style={{ minWidth:90, display:"flex", justifyContent:"flex-end", alignItems:"center", gap:10 }}>
-            {rightEl || null}
-            <LangToggle/>
+    // Хедер — единый по стилю с лендингом ravio.kz: логотип слева, гео-бейдж,
+    // переключатель языка справа, полупрозрачный фон + blur. Кнопка «← Назад»
+    // выносится в отдельную строку-подшапку под хедером (только на внутренних экранах).
+    const TopBar = ({ step, total, onBack, showBack=true, rightEl, onLogoClick, progress }) => {
+      const isMobile = useIsMobile();
+      return (
+      <div style={{ position:"sticky", top:0, zIndex:50 }}>
+        {/* Основная строка хедера */}
+        <div style={{ background:"rgba(255,255,255,0.92)", backdropFilter:"blur(10px)",
+          WebkitBackdropFilter:"blur(10px)", borderBottom:`1px solid ${T.border}` }}>
+          <div style={{ maxWidth:1240, margin:"0 auto", padding:"0 24px",
+            display:"flex", alignItems:"center", gap:14, height:64 }}>
+            <Logo onClick={onLogoClick}/>
+            {!isMobile && (
+              <span style={{ background:"#FFF6DD", color:"#8A6D1F", fontSize:13, fontWeight:600,
+                borderRadius:20, padding:"6px 14px", whiteSpace:"nowrap" }}>{tr("Павлодар, Казахстан")}</span>
+            )}
+            <div style={{ marginLeft:"auto", display:"flex", alignItems:"center", gap:10 }}>
+              {rightEl || null}
+              <LangToggle/>
+            </div>
           </div>
         </div>
+        {/* Подшапка с кнопкой «Назад» */}
+        {showBack && (
+          <div style={{ background:T.bgCard, borderBottom:`1px solid ${T.border}` }}>
+            <div style={{ maxWidth:1240, margin:"0 auto", padding:"10px 24px" }}>
+              <button onClick={onBack} className="rayo-btn-ghost"
+                style={{ display:"inline-flex", alignItems:"center", gap:6, padding:"7px 14px",
+                  borderRadius:T.rPill, background:"transparent", border:`1.5px solid ${T.border}`,
+                  fontSize:13, fontWeight:600, color:T.text, cursor:"pointer", whiteSpace:"nowrap" }}>{tr("← Назад")}</button>
+            </div>
+          </div>
+        )}
         {/* Прогресс-бар — показывается только во время wizard */}
         {progress != null && (
           <div style={{ height:3, background:"#EEEAE2" }}>
@@ -928,7 +945,8 @@
           </div>
         )}
       </div>
-    );
+      );
+    };
 
     const StepLabel = ({ label }) => (
       <div style={{ fontSize:10, fontWeight:700, color:T.textMuted, letterSpacing:"0.1em",
@@ -1187,7 +1205,7 @@
     const WizardWrap = ({ children, sel, liveResult, isMobile, animKey, microSteps = [], microIdx = 0 }) => (
       <div style={{ minHeight:"100vh", background:T.bgPage }}>
         {isMobile && <SummaryPanel sel={sel} isMobile microSteps={microSteps} microIdx={microIdx}/>}
-        <div style={{ maxWidth:960, margin:"0 auto", padding:isMobile?"16px 16px 80px":"28px 24px 80px",
+        <div style={{ maxWidth:1240, margin:"0 auto", padding:isMobile?"16px 16px 80px":"28px 24px 80px",
           display: isMobile ? "block" : "grid",
           gridTemplateColumns: "1fr 300px", gap:32 }}>
           <div key={animKey} className="rayo-anim">{children}</div>
@@ -1995,14 +2013,7 @@
 
       const WizHeader = () => gStep === "scope"
         ? (
-          <div style={{ background:T.bgCard, boxShadow:"0 1px 0 0 #E8E6E0", position:"sticky", top:0, zIndex:50 }}>
-            <div style={{ maxWidth:960, margin:"0 auto", padding:"0 24px",
-              display:"flex", alignItems:"center", justifyContent:"space-between", height:60 }}>
-              <div style={{ width:72 }}/>
-              <Logo onClick={goMain}/>
-              <LangToggle/>
-            </div>
-          </div>
+          <TopBar showBack={false} onLogoClick={goMain}/>
         ) : (
           <TopBar step={stepNum} total={totalSteps} onBack={onBack} onLogoClick={goMain} progress={wizardProgress}/>
         );
@@ -2011,7 +2022,7 @@
       if (gStep === "scope") return (
         <div style={{ minHeight:"100vh", background:T.bgPage, fontFamily:T.font }}>
           <WizHeader/>
-          <div style={{ maxWidth:960, margin:"0 auto", padding: isMobile?"24px 16px 80px":"48px 24px 80px" }}
+          <div style={{ maxWidth:1240, margin:"0 auto", padding: isMobile?"24px 16px 80px":"48px 24px 80px" }}
             key={animKey} className="rayo-anim">
 
             <h1 style={{ fontSize:isMobile?28:42, fontWeight:900, color:T.text, marginBottom:12,
