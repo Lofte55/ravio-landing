@@ -2288,7 +2288,7 @@
               <MiniProg current={microIdx} total={microSteps.length}/>
 
               {stage === "materials" && (<>
-                <StageHeader icon={STAGE_ICONS.materials} title="Материалы" subtitle="Ориентировочно ~37% от стоимости работ"/>
+                <StageHeader icon={STAGE_ICONS.materials} title="Материалы" subtitle="Учитывать стоимость материалов в расчёте"/>
                 <OptionRow icon="✓" title="Да, показать с материалами" sub="Более реалистичная оценка"
                   onClick={()=>upd("includeMaterials","yes")} active={sel.includeMaterials==="yes"}/>
                 <OptionRow icon="✕" title="Только стоимость работ" sub=""
@@ -2347,7 +2347,7 @@
                     <NumInput label="Радиаторы" value={sel.radiatorCount}
                       onChange={v=>upd("radiatorCount",v)} suffix="шт"/>
                     <div style={{ fontSize:11, color:T.textMuted, marginTop:8 }}>
-                      ~{CONFIG.independent.prices.radiatorUnit.toLocaleString("ru-RU")} ₸/шт — только монтаж без стоимости радиатора
+                      {tr("Только монтаж, без стоимости самого радиатора")}
                     </div>
                   </div>
                 )}
@@ -2366,7 +2366,7 @@
               </>)}
 
               {stage === "wasteRemoval" && (<>
-                <StageHeader icon={STAGE_ICONS.wasteRemoval} title="Вывоз мусора" subtitle={`Фиксированная стоимость: ${fmt(CONFIG.independent.prices.wasteRemovalFixed)}`}/>
+                <StageHeader icon={STAGE_ICONS.wasteRemoval} title="Вывоз мусора" subtitle="Вывоз и утилизация строительного мусора"/>
                 <OptionRow icon="✓" title="Да, нужен" sub="Вывоз и утилизация строительного мусора"
                   onClick={()=>upd("wasteRemoval","yes")} active={sel.wasteRemoval==="yes"}/>
                 <OptionRow icon="✕" title="Нет, справимся сами" sub=""
@@ -2700,7 +2700,7 @@
                     <>
                       <div style={{ fontSize:12, fontWeight:700, color:T.textMuted, textTransform:"uppercase",
                         letterSpacing:"0.06em", marginBottom:8 }}>
-                        Выравнивание пола · +{CONFIG.independent.prices.floorLevelingM2.toLocaleString()} ₸/м²
+                        {tr("Выравнивание пола")}
                       </div>
                       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8, marginBottom:4 }}>
                         {[["yes","✓ Добавить стяжку"],["no","— Не нужно"]].map(([v,l])=>(
@@ -2739,7 +2739,7 @@
                     <>
                       <div style={{ fontSize:12, fontWeight:700, color:T.textMuted, textTransform:"uppercase",
                         letterSpacing:"0.06em", margin:"14px 0 8px" }}>
-                        Штукатурка стен · +{CONFIG.independent.prices.wallLevelingM2.toLocaleString()} ₸/м²
+                        {tr("Штукатурка стен")}
                       </div>
                       <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
                         {[["yes","✓ Добавить штукатурку"],["no","— Не нужно"]].map(([v,l])=>(
