@@ -124,8 +124,19 @@
 <body>
   <!-- Статичный контент для поисковиков и ИИ-краулеров без JavaScript.
        React заменяет его приложением при загрузке (createRoot очищает #root). -->
+  <!-- Стартовый лоадер + скрытый SEO-текст: пользователь до монтирования React
+       видит чистый брендовый экран, а не сырой текст (FOUC). SEO остаётся в DOM. -->
+  <style>
+    #rv-boot{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+      background:#fff;z-index:1}
+    #rv-boot img{height:44px;animation:rvpulse 1.2s ease-in-out infinite}
+    @keyframes rvpulse{0%,100%{opacity:1}50%{opacity:.45}}
+    .rv-seo{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+      clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  </style>
   <div id="root">
-    <div style="max-width:960px;margin:0 auto;padding:48px 24px;font-family:system-ui,sans-serif;color:#1E2028;">
+    <div id="rv-boot"><img src="logo.svg" alt="RAVIO"/></div>
+    <div class="rv-seo">
       <h1>Калькулятор стоимости ремонта квартиры в Павлодаре</h1>
       <p>RAVIO — бесплатный онлайн-калькулятор ремонта квартиры в Павлодаре (Казахстан).
         Ответьте на несколько вопросов и получите предварительную смету за 2 минуты:
@@ -890,15 +901,26 @@
       langListeners.forEach(fn => fn());
     }
     applyLangFont(); // выставить шрифт при загрузке (если язык уже KZ)
+    const FlagRU = () => (
+      <svg width="16" height="12" viewBox="0 0 16 12" style={{ borderRadius:2, display:"block", flexShrink:0 }} aria-hidden="true">
+        <rect width="16" height="12" fill="#fff"/><rect y="4" width="16" height="4" fill="#0039A6"/><rect y="8" width="16" height="4" fill="#D52B1E"/>
+      </svg>
+    );
+    const FlagKZ = () => (
+      <svg width="16" height="12" viewBox="0 0 16 12" style={{ borderRadius:2, display:"block", flexShrink:0 }} aria-hidden="true">
+        <rect width="16" height="12" fill="#00AFCA"/><circle cx="8" cy="5.2" r="2.3" fill="#FEC50C"/><rect x="4.2" y="9" width="7.6" height="1" rx="0.5" fill="#FEC50C"/>
+      </svg>
+    );
     const LangToggle = () => (
       <div style={{ display:"flex", gap:2, background:"#F2F0EA", borderRadius:T.rPill, padding:3, flexShrink:0 }}>
-        {[["ru","РУ"],["kz","ҚАЗ"]].map(([code,label]) => (
+        {[["ru","РУ",FlagRU],["kz","ҚАЗ",FlagKZ]].map(([code,label,Flag]) => (
           <button key={code} onClick={() => setLang(code)} style={{
+            display:"inline-flex", alignItems:"center", gap:5,
             padding:"4px 10px", borderRadius:T.rPill, border:"none", cursor:"pointer",
             fontSize:12, fontWeight:700, transition:"all .15s",
             background: LANG===code ? T.text : "transparent",
             color: LANG===code ? T.accent : T.textSub,
-          }}>{label}</button>
+          }}><Flag/>{label}</button>
         ))}
       </div>
     );

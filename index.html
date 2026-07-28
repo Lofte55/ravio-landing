@@ -74,7 +74,8 @@ h2{font-size:clamp(28px,4vw,44px);font-weight:800;line-height:1.15;letter-spacin
 .burger{display:none;margin-left:auto;flex-direction:column;gap:5px;padding:8px}
 .burger span{width:22px;height:2px;background:var(--ink);border-radius:2px}
 .lang-toggle{display:inline-flex;gap:2px;background:#F2F0EA;border-radius:999px;padding:3px;flex:0 0 auto}
-.lang-toggle button{padding:5px 11px;border-radius:999px;border:none;cursor:pointer;font-size:12px;font-weight:700;background:transparent;color:var(--muted);transition:background .15s,color .15s}
+.lang-toggle button{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:999px;border:none;cursor:pointer;font-size:12px;font-weight:700;background:transparent;color:var(--muted);transition:background .15s,color .15s}
+.lang-toggle button svg{border-radius:2px;display:block;flex:0 0 auto}
 .lang-toggle button.active{background:var(--ink);color:var(--yellow)}
 
 /* hero */
@@ -560,8 +561,8 @@ footer{background:var(--ink);color:#B9BAC2;padding:56px 0 24px;font-size:14px}
       <a class="btn btn-dark" href="/calculator/">Рассчитать ремонт</a>
     </div>
     <div class="lang-toggle" role="group" aria-label="Язык / Тіл">
-      <button type="button" data-lang-btn="ru">РУ</button>
-      <button type="button" data-lang-btn="kz">ҚАЗ</button>
+      <button type="button" data-lang-btn="ru"><svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><rect width="16" height="12" fill="#fff"/><rect y="4" width="16" height="4" fill="#0039A6"/><rect y="8" width="16" height="4" fill="#D52B1E"/></svg>РУ</button>
+      <button type="button" data-lang-btn="kz"><svg width="16" height="12" viewBox="0 0 16 12" aria-hidden="true"><rect width="16" height="12" fill="#00AFCA"/><circle cx="8" cy="5.2" r="2.3" fill="#FEC50C"/><rect x="4.2" y="9" width="7.6" height="1" rx="0.5" fill="#FEC50C"/></svg>ҚАЗ</button>
     </div>
     <button class="burger" aria-label="Меню" data-burger><span></span><span></span><span></span></button>
   </div>
