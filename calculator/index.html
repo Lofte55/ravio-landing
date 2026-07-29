@@ -797,6 +797,8 @@
           .rayo-scope-card { transition: box-shadow .22s ease, transform .22s cubic-bezier(0.34,1.45,0.5,1), border-color .18s; }
           .rayo-scope-card:hover { box-shadow: 0 8px 28px rgba(30,32,40,.12); transform: translateY(-3px); }
           .rayo-scope-card:active { transform: translateY(-1px) scale(0.985); }
+          .rayo-scope-cta { transition: background .15s; }
+          .rayo-scope-card:hover .rayo-scope-cta { background:#E8BA20; }
 
           .rayo-option-row { transition: background .14s, border-color .14s, transform .18s cubic-bezier(0.34,1.45,0.5,1); }
           .rayo-option-row:hover:not([data-active="true"]) { border-color: #1E2028 !important; background: #FAFAFA !important; }
@@ -2092,9 +2094,11 @@
                         marginBottom:8, lineHeight:1.25, letterSpacing:-0.3 }}>{tr(title)}</div>
                       <div style={{ fontSize:14, color: active?"rgba(255,255,255,0.6)":T.textSub, lineHeight:1.55,
                         marginBottom:"auto", paddingBottom:16 }}>{tr(sub)}</div>
-                      <div style={{ fontSize:13, fontWeight:700, color: active?T.accent:T.text,
-                        display:"flex", alignItems:"center", gap:4 }}>
-                        {tr("Начать")} <span style={{ fontSize:16 }}>→</span>
+                      <div className="rayo-scope-cta" style={{ marginTop:"auto",
+                        background:T.accent, color:T.text, borderRadius:T.rBtn,
+                        padding:"12px 16px", fontSize:14, fontWeight:700,
+                        display:"flex", alignItems:"center", justifyContent:"center", gap:6 }}>
+                        {tr("Начать считать")} <span style={{ fontSize:16 }}>→</span>
                       </div>
                     </div>
                   </button>
